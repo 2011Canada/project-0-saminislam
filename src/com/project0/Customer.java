@@ -92,16 +92,31 @@ public class Customer  {
 			
 	}
 	
-	// THESE GOT PASTED FROM TRANSACTION CLASS
-	// CHECK TO SEE IF YOU NEED TO KEEP THE TRANSACTION METHODS
-	
+
+	// you never checked the case to see if the Account exists for withdraw and depo
 	public void withdraw(double w_amount, Account A ) {
-		A.amount = A.amount - w_amount;
-		
+		if (w_amount > 0) {
+			if (A.amount > w_amount) {
+				A.amount = A.amount - w_amount;
+				System.out.println("$" + w_amount + " has been withdrawn.");
+				System.out.println("$" + A.amount + " is remaining in your " + A.AccountName + " account.");
+			}	else {
+				System.out.println("Not enough money to withdraw");
+			}
+		}	else {
+			System.out.println("Not able to withdraw a negative amount");
+		}
 	}
 	
 	public void deposit(double d_amount, Account A) {
-		A.amount = A.amount + d_amount;
+		if (d_amount > 0) {
+			A.amount = A.amount + d_amount;
+			System.out.println("$" + d_amount + " has been depositted.");
+			System.out.println("$" + A.amount + " is remaining in your " + A.AccountName + " account.");
+		}	else {
+			System.out.println("Not able to withdraw a negative amount");
+		}
+		
 	}
 	
 	

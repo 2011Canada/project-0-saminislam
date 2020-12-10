@@ -22,10 +22,23 @@ public class Mainprogram {
 		
 		Transaction T = new Transaction("SAMIN", "RAKIN", 90000, "Chequing");
 		
-		boolean flag = T.VerifyTransaction(T,a1);
+		
+		//boolean flag = T.VerifyTransaction(T,a1);
 		//System.out.println(flag);
 		
-		System.out.println(Customer.customer_list);
+		for (Customer item : Customer.customer_list) {
+			System.out.println(item);
+		}
+		
+		c1.withdraw(200, a1);
+		c2.deposit(200000, a2);
+		
+		System.out.println("XXXXXXX" + '\n');
+		
+		for (Customer item : Customer.customer_list) {
+			System.out.println(item);
+		}		
+		
 		/*
 		
 		

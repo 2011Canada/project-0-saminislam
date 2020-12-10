@@ -34,13 +34,6 @@ public class Transaction extends Account {
 
 	
 
-	public void withdraw(double w_amount, Account A ) {
-		A.amount = A.amount - w_amount;
-		
-	}
-	
-	public void deposit(double d_amount, Account A) {
-		A.amount = A.amount + d_amount;
-	}
+
 }
 
