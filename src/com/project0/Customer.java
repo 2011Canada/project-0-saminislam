@@ -93,7 +93,8 @@ public class Customer  {
 	}
 	
 
-	// you never checked the case to see if the Account exists for withdraw and depo
+	// you never checked the case to see if the Account exists for withdraw and deposit
+	// but not sure if that will be necessary though
 	public void withdraw(double w_amount, Account A ) {
 		if (w_amount > 0) {
 			if (A.amount > w_amount) {
