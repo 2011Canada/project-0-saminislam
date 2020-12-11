@@ -20,12 +20,25 @@ public class Mainprogram {
 		Account a2 = new Account("Chequing",1500);
 		c2.account_list.add(a2);
 		
-		Transaction T = new Transaction("SAMIN", "RAKIN", 90000, "Chequing");
+		Transaction T = new Transaction("SAMIN", "RAKIN", 100, a1);
+		T.VerifyTransaction(T, a1);
+		System.out.println("T=" + T);
+		System.out.println("c2=" + c2);
+		T.AcceptTransaction(T, a2, a1, true,c1,c2);
+		System.out.println("T=" + T);
+		System.out.println("c2=" + c2);
+		System.out.println("XXXXXXXXXXXXXXXXXXXXX " + '\n');
+		//System.out.println(c1.transaction_list);
+		c1.toString();
+		
+		//System.out.println("amount deposited = " + T.amount_deposited);
+		
 		
 		
 		//boolean flag = T.VerifyTransaction(T,a1);
 		//System.out.println(flag);
 		
+		/*
 		for (Customer item : Customer.customer_list) {
 			System.out.println(item);
 		}
@@ -38,6 +51,8 @@ public class Mainprogram {
 		for (Customer item : Customer.customer_list) {
 			System.out.println(item);
 		}		
+		
+		*/
 		
 		/*
 		

@@ -4,6 +4,7 @@ public class Account extends Customer {
 
 	String AccountName;
 	public double amount;
+	public Customer customer;
 	
 	
 	public Account() {

@@ -80,16 +80,26 @@ public class Customer  {
 	
 	
 	
-	public void AcceptTransaction(Transaction T, Account money_getter, Account money_spender) {
-		if (T.amount_deposited == false) {
-			T.amount_deposited = true;
-			money_getter.amount = money_getter.amount + T.amount_to_send;
-			money_spender.amount = money_spender.amount - money_spender.amount;
-					
+	public void AcceptTransaction(Transaction T, Account money_getter, Account money_spender, boolean accept, Customer money_getter_customer, Customer money_spender_customer) {
+		
+		if (T.amount_deposited == null) {
+			if (accept == true) {
+				T.amount_deposited = true;
+				money_getter.amount = money_getter.amount + T.amount_to_send;
+				money_spender.amount = money_spender.amount - money_spender.amount;
+				money_getter_customer.transaction_list.add(T);
+				money_spender_customer.transaction_list.add(T);
+			} else if (accept == false) {
+				System.out.println("You have rejected the Transaction");
+				money_getter_customer.transaction_list.add(T);
+				money_spender_customer.transaction_list.add(T);
+				T.amount_deposited = false;
+				}
+		} else if (T.amount_deposited == true ) {
+			System.out.println("Transaction has been deposited already");
 		} else {
-			System.out.println("Transaction has already been accepted");
+			System.out.println("Transaction has been rejected by user");
 		}
-			
 	}
 	
 
