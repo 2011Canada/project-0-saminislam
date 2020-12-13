@@ -1,10 +1,9 @@
 package com.project0;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class Customer  {
 	
@@ -37,16 +36,33 @@ public class Customer  {
 				"List of Accounts: " + this.account_list + '\n' +
 				"Transaction List: " + this.transaction_list);
 	}
+	
+	public boolean Vequals(String name, String password) {
 
-	public static void verifyCustomer(String name, String password) {
+		//Customer p = (Customer) c;
+		
+		if (!this.customer_name.equals(name)) {
+			return false;
+		}
+		
+		if (!this.password.equals(password)) {
+			return false;
+		}
+		return true;
+	}
+
+	public static Customer verifyCustomer(String name, String password) {
 		
 		for (Customer item : customer_list) {
-			if ((item.customer_name == name) && (item.password == password)) {
+			if (item.Vequals(name, password))  {
 				System.out.println("Account Verified!");
+				return item;
 				} else {
 					System.out.println("Account Not Verified!");
+					return null;
 					}
 			}
+		return null;
 		}
 	
 	// method to make sure that transaction object can actually be made
@@ -57,7 +73,7 @@ public class Customer  {
 	public boolean VerifyTransaction(Transaction T, Account money_spender) {
 		// first verification to see if person you are sending the money to is in DB
 		for ( Customer item : customer_list) {
-			if (item.customer_name == T.receiver) {
+			if (item.customer_name.equals(T.receiver)) {
 				// second verification to check if person isn't sending negative money
 				if (T.amount_to_send > 0 ) {
 					// third verification to check if person has enough money to send 
@@ -86,7 +102,7 @@ public class Customer  {
 			if (accept == true) {
 				T.amount_deposited = true;
 				money_getter.amount = money_getter.amount + T.amount_to_send;
-				money_spender.amount = money_spender.amount - money_spender.amount;
+				money_spender.amount = money_spender.amount - T.amount_to_send;
 				money_getter_customer.transaction_list.add(T);
 				money_spender_customer.transaction_list.add(T);
 			} else if (accept == false) {

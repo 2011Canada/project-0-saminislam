@@ -18,7 +18,7 @@ public class Account extends Customer {
 	}
 	
 	public String toString() {
-		return ("Account Name: " + this.AccountName + '\n' + "Amount: " + this.amount);
+		return ("Account Name: " + this.AccountName + '\n' + "Amount: $" + this.amount);
 		
 	}
 
