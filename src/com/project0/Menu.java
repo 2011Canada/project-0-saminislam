@@ -45,6 +45,7 @@ public class Menu {
 			String name = scan.nextLine();
 			System.out.print("Please enter your Password: ");
 			String password = scan.nextLine();
+			//System.out.println(Customer.customer_list);
 			Customer account_found = Customer.verifyCustomer(name,password);
 			if (account_found!= null) {
 				printMenu1(account_found);
@@ -221,17 +222,90 @@ public class Menu {
 			break;
 			
 		case 4: 
-			System.out.println("Checking Pending Transactions");
-			System.out.println(c1.transaction_list.get(0));
-			System.out.println(c1.transaction_list.get(0).amount_deposited);
+			System.out.println("Checking Outgoing Pending Transactions..." + '\n');
+			boolean outgoingflag = false;
+			//System.out.println(c1.transaction_list.get(0));
+			//System.out.println(c1.transaction_list.get(0).amount_deposited);
 			for (int i = 0; i < c1.transaction_list.size(); i ++) {
-				if (c1.transaction_list.get(i).amount_deposited == null) {
+				
+				if (c1.transaction_list.get(i).amount_deposited == null && (!c1.transaction_list.get(i).receiver.equals(c1.customer_name))) {
 				System.out.println("Transaction " + (i+1) + "-> " + "Sender: " + c1.transaction_list.get(i).sender + '\n' +
 						"                Recipient: " + c1.transaction_list.get(i).receiver + '\n' +
 						"                Amount Sent: " + c1.transaction_list.get(i).amount_to_send  + '\n' +
-						"                Deposited: " + c1.transaction_list.get(i).amount_deposited + '\n');
+						"                Deposited: " + "Not Yet Accepted or Declined by Recipient" + '\n');
+				outgoingflag = true;
+				}	
+				}
+			
+			
+			if (!outgoingflag) {
+				System.out.println("You have no Outgoing Pending Transactions" + '\n');
+			}
+			System.out.println("Checking Incoming Pending Transactions..." + '\n');
+			
+			boolean incoming_flag = false;
+			for (int i = 0; i < c1.transaction_list.size(); i ++) {
+				
+				if (c1.transaction_list.get(i).amount_deposited == null && c1.transaction_list.get(i).receiver.equals(c1.customer_name)) {
+				System.out.println("Transaction " + (i+1) + "-> " + "Sender: " + c1.transaction_list.get(i).sender + '\n' +
+						"                Recipient: " + c1.transaction_list.get(i).receiver + '\n' +
+						"                Amount Sent: " + c1.transaction_list.get(i).amount_to_send  + '\n' +
+						"                Deposited: " + "Not Yet Accepted or Declined by Recipient" + '\n');
+				incoming_flag= true;
 				}
 			}
+			
+			if (!incoming_flag) {
+				System.out.println("You have no Incoming Pending Transactions" + '\n');
+				
+			}
+			
+			if (incoming_flag && c1.transaction_list.get(i).amount_deposited == null) {
+				System.out.println("Would you like to accept any incoming transactions?");
+				System.out.println("Input '1' to accept or '2' to try again later");
+				int choice3 = Integer.parseInt(scan.nextLine());
+				if (choice3 == 1) {
+					for (int i = 0; i < c1.transaction_list.size(); i ++) {
+					
+						if (c1.transaction_list.get(i).amount_deposited == null && c1.transaction_list.get(i).receiver.equals(c1.customer_name)) {
+							System.out.println("Transaction " + (i+1) + "-> " + "Sender: " + c1.transaction_list.get(i).sender + '\n' +
+									"                Recipient: " + c1.transaction_list.get(i).receiver + '\n' +
+									"                Amount Sent: " + c1.transaction_list.get(i).amount_to_send  + '\n' +
+									"                Deposited: " + "Not Yet Accepted or Declined by Recipient" + '\n');
+					
+							try {
+								System.out.println("Would you like to accept or decline this transaction");
+								System.out.println("Input '1' to accept or '2' to decline this transaction");
+								choice3 = Integer.parseInt(scan.nextLine());
+								if (choice3 == 1) {
+									System.out.println("Which account do you want to deposit this Transaction?");
+									int counter = 1;
+									for (Account item : c1.account_list) {
+										System.out.println(counter + ")" + item.toString());
+										System.out.println();
+										counter++;
+										}
+									choice3 = Integer.parseInt(scan.nextLine());
+							
+									c1.transaction_list.get(i).AcceptTransaction(c1.transaction_list.get(i), c1.account_list.get(choice3 - 1), c1.transaction_list.get(i).account, true);
+									}
+								if (choice3 == 2) {
+									c1.transaction_list.get(i).AcceptTransaction(c1.transaction_list.get(i), c1.account_list.get(choice3 - 1), c1.transaction_list.get(i).account, false);
+									System.out.println("This Transaction has been rejected");
+								}
+
+							}
+							catch(NumberFormatException e) {
+								System.out.println("Invalid Selection. ");
+								break;
+								}
+
+							}
+					}	
+				}
+			}
+			
+			
 			enterKeyHit();
 			choice = 0;
 			break;

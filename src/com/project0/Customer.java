@@ -57,11 +57,9 @@ public class Customer  {
 			if (item.Vequals(name, password))  {
 				System.out.println("Account Verified!");
 				return item;
-				} else {
-					System.out.println("Account Not Verified!");
-					return null;
-					}
-			}
+				}
+		}
+		System.out.println("Account Not Verified!");
 		return null;
 		}
 	
@@ -96,19 +94,19 @@ public class Customer  {
 	
 	
 	
-	public void AcceptTransaction(Transaction T, Account money_getter, Account money_spender, boolean accept, Customer money_getter_customer, Customer money_spender_customer) {
+	public void AcceptTransaction(Transaction T, Account money_getter, Account money_spender, boolean accept) {
 		
 		if (T.amount_deposited == null) {
 			if (accept == true) {
 				T.amount_deposited = true;
 				money_getter.amount = money_getter.amount + T.amount_to_send;
 				money_spender.amount = money_spender.amount - T.amount_to_send;
-				money_getter_customer.transaction_list.add(T);
-				money_spender_customer.transaction_list.add(T);
+				//money_getter_customer.transaction_list.add(T);
+				//money_spender_customer.transaction_list.add(T);
 			} else if (accept == false) {
 				System.out.println("You have rejected the Transaction");
-				money_getter_customer.transaction_list.add(T);
-				money_spender_customer.transaction_list.add(T);
+				//money_getter_customer.transaction_list.add(T);
+				//money_spender_customer.transaction_list.add(T);
 				T.amount_deposited = false;
 				}
 		} else if (T.amount_deposited == true ) {
