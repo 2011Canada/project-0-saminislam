@@ -120,8 +120,8 @@ public class Customer  {
 	// you never checked the case to see if the Account exists for withdraw and deposit
 	// but not sure if that will be necessary though
 	public void withdraw(double w_amount, Account A ) {
-		if (w_amount > 0) {
-			if (A.amount > w_amount) {
+		if (w_amount >= 0) {
+			if (A.amount >= w_amount) {
 				A.amount = A.amount - w_amount;
 				System.out.println("$" + w_amount + " has been withdrawn.");
 				System.out.println("$" + A.amount + " is remaining in your " + A.AccountName + " account.");
@@ -134,7 +134,7 @@ public class Customer  {
 	}
 	
 	public void deposit(double d_amount, Account A) {
-		if (d_amount > 0) {
+		if (d_amount >= 0) {
 			A.amount = A.amount + d_amount;
 			System.out.println("$" + d_amount + " has been depositted.");
 			System.out.println("$" + A.amount + " is remaining in your " + A.AccountName + " account.");

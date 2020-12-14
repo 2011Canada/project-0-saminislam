@@ -260,7 +260,7 @@ public class Menu {
 				
 			}
 			
-			if (incoming_flag && c1.transaction_list.get(i).amount_deposited == null) {
+			if (incoming_flag) {
 				System.out.println("Would you like to accept any incoming transactions?");
 				System.out.println("Input '1' to accept or '2' to try again later");
 				int choice3 = Integer.parseInt(scan.nextLine());
@@ -313,20 +313,26 @@ public class Menu {
 			
 		case 5:
 			int choice2 = 0;
+			if (c1.account_list.size() == 0) {
+				System.out.println("You do not have an account to deposit or withdraw money from");
+				enterKeyHit();
+				break;
+			}
 			System.out.println("Would you like to Deposit or Withdraw Money?");
 			System.out.println("Select 1 for Deposit or 2 for Withdrawal");
 			choice2 = Integer.parseInt(scan.nextLine());
 			if (choice2 == 1) {
 				System.out.println("How much would you like to deposit?");
 				double amount_depositted = scan.nextDouble();
+				scan.nextLine();
 				System.out.print(" Which account do you want to deposit to? :" + '\n');
-				
+				int a = 1;
+				choice2 = 0;
 				for (Account item : c1.account_list) {
-					int i = 1;
-					System.out.println(i + ") " + item.AccountName + ": " + item.amount);
-					i++;
+					System.out.println(a + ") " + item.AccountName + ": " + item.amount);
+					a++;
 				}
-				while(choice2 < 1 || choice > c1.account_list.size()) {
+				while(choice2 < 1 || choice2 > c1.account_list.size()) {
 					try {
 						System.out.print("Enter your choice: ");
 						choice2 = Integer.parseInt(scan.nextLine());
@@ -337,18 +343,22 @@ public class Menu {
 						break;
 					}
 				}
-				c1.deposit(amount_depositted, c1.account_list.get(choice2));
+				c1.deposit(amount_depositted, c1.account_list.get(choice2 - 1));
+				System.out.println("\n");
+				enterKeyHit();
+				choice2 = 0;
 			}
 			if (choice2 == 2) {
 				System.out.println("How much would you like to withdraw?");
 				int amount_withdrawn = Integer.parseInt(scan.nextLine());
-				System.out.print(" Which account do you want to withdraw from? :" + '\n');
+				System.out.print("Which account do you want to withdraw from? :" + '\n');
+				int i = 1;
+				choice2 = 0;
 				for (Account item : c1.account_list) {
-					int i = 1;
 					System.out.println(i + ") " + item.AccountName + ": " + item.amount);
 					i++;
 				}
-				while(choice2 < 1 || choice > c1.account_list.size()) {
+				while(choice2 < 1 || choice2 > c1.account_list.size()) {
 					try {
 						System.out.print("Enter your choice: ");
 						choice2 = Integer.parseInt(scan.nextLine());
@@ -359,9 +369,10 @@ public class Menu {
 						break;
 					}
 				}
-				c1.withdraw(amount_withdrawn,c1.account_list.get(choice2));
+				c1.withdraw(amount_withdrawn,c1.account_list.get(choice2 - 1));
+				System.out.println("\n");
 				enterKeyHit();
-				choice = 0;
+				choice2 = 0;
 			}
 			break;
 		case 6:
