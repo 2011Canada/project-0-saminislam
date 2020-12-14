@@ -59,6 +59,7 @@ public class Menu {
 				account_found = Customer.verifyCustomer(name,password);
 				if (account_found != null) {
 					printMenu1(account_found);
+					System.out.println("");
 				} else {
 					System.out.println('\n' + "Could not find your account!" + '\n' +"You will be sent back to the main menu" );
 					enterKeyHit();
@@ -388,12 +389,7 @@ public class Menu {
 		
 	}
 	
-	private void printMenu2() {
-		System.out.println("1) What is your name?");
-		System.out.println("2) What is your password?");
-		System.out.println("3) Go Back");
 
-	}
 	
 	private void enterKeyHit() {
 		String input;
@@ -406,53 +402,82 @@ public class Menu {
 	
 	
 	private void printMenu3(Employee emp) {
+		Scanner scan = new Scanner(System.in);
+		boolean exit = false;
 		System.out.println("Employee Login");
 		System.out.println("Only 1 chance is granted or else you will be taken back to main menu");
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Please enter your Name");
+		System.out.print("Please enter your Name: ");
 		String name = scan.nextLine();
-		System.out.println("Please enter your Password");
+		System.out.print("Please enter your Password: ");
 		String password = scan.nextLine();
-		if (name == emp.username && password == emp.password) {
+		if (name.equals(emp.username) && password.equals(emp.password)) {
 			System.out.println("Employee Login Successful");
+			while(!exit) {
 			System.out.println("What would you like to do next?");
 			System.out.println("1) Check a customer's Bank Accounts");
 			System.out.println("2) Check a customer's transaction logs");
 			System.out.println("3) Reject a customer's bank account");
 			System.out.println("4) Exit");
 			int choice_m3 = Integer.parseInt(scan.nextLine());
-			while (choice_m3 < 1 && choice_m3 > 4) {
+			while (choice_m3 < 1 || choice_m3 > 4) {
 				System.out.println("Please Enter Again:");
 			}
 			if (choice_m3 == 1) {
-				System.out.println("These are all the Customer users in your database");
-				Employee.View_Customer_List();
-				System.out.println("Which customer's bank account would you like to see?");
-				int cust_num = Integer.parseInt(scan.nextLine()) - 1;
-				emp.View_Customer_Bank_Accounts(Customer.customer_list.get(cust_num));
+
+				if (Customer.customer_list.size() == 0 ) {
+					System.out.println("No customers in your database");
+					enterKeyHit();
 				}
+			
+				if (Customer.customer_list.size() != 0 ) {
+					System.out.println("These are all the Customer users in your database" + choice_m3 + ")");
+					Employee.View_Customer_List();
+					System.out.println("Which customer's bank account would you like to see?");
+					int cust_num = Integer.parseInt(scan.nextLine()) - 1;
+					emp.View_Customer_Bank_Accounts(Customer.customer_list.get(cust_num));
+				}
+			}
 			if (choice_m3 == 2 ) {
-				System.out.println("These are all the Customer users in your database");
+				if (Customer.customer_list.size() == 0 ) {
+					System.out.println("No customers in your database");
+					enterKeyHit();
+				}
+				
+				if (Customer.customer_list.size() != 0 ) {
+				System.out.println("These are all the Customer users in your database" + choice_m3 + ")");
 				Employee.View_Customer_List();
 				System.out.println("Which Customer's transaction logs do you want to see?");
 				int cust_num = Integer.parseInt(scan.nextLine()) - 1;
 				emp.View_Transaction_Log(Customer.customer_list.get(cust_num));
+				}
 			}
+			
 			if (choice_m3 == 3 ) {
-				System.out.println("These are all the Customer users in your database");
-				Employee.View_Customer_List();
-				System.out.println("Which Customer's bank account would you like to see?");
-				int cust_num = Integer.parseInt(scan.nextLine()) - 1;
-				emp.View_Customer_Bank_Accounts(Customer.customer_list.get(cust_num));
-				System.out.println("Which Customer's bank account would you like to reject?");
-				int bank_id = Integer.parseInt(scan.nextLine()) - 1;
-				emp.Account_Rejector(Customer.customer_list.get(cust_num), Customer.customer_list.get(cust_num).account_list.get(bank_id));
-			}
+				if (Customer.customer_list.size() == 0 ) {
+					System.out.println("No customers in your database");
+					enterKeyHit();
+				}
+				if (Customer.customer_list.size() != 0 ) {
+					System.out.println("These are all the Customer users in your database" + choice_m3 + ")");
+					Employee.View_Customer_List();
+					System.out.println("Which Customer's bank account would you like to see?");
+					int cust_num = Integer.parseInt(scan.nextLine()) - 1;
+					emp.View_Customer_Bank_Accounts(Customer.customer_list.get(cust_num));
+					System.out.println("Which Customer's bank account would you like to reject?");
+					int bank_id = Integer.parseInt(scan.nextLine()) - 1;
+					emp.Account_Rejector(Customer.customer_list.get(cust_num), Customer.customer_list.get(cust_num).account_list.get(bank_id));
+					}
+				}
 			if (choice_m3 == 4) {
 				System.out.println("You have chosen to exit");
+				enterKeyHit();
+				exit = true;
+				}
 			}
 		}
 	}
+	
+}
 	
 	
 	// You need to fix the indices
@@ -463,27 +488,3 @@ public class Menu {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-}

@@ -13,7 +13,7 @@ public class Employee extends Account{
 	
 	public static void View_Customer_List() {
 		for (int i = 0; i < customer_list.size(); i++) {
-			System.out.println("Customer " + (i+1) + ": " + customer_list.get(i).customer_name);
+			System.out.println("Customer " + (i+1) + ": " + customer_list.get(i).customer_name + '\n');
 		}
 	}
 	
@@ -28,9 +28,10 @@ public class Employee extends Account{
 	}
 	
 	public void View_Customer_Bank_Accounts(Customer c1) {
-		System.out.println("Customer " + c1.customer_name + " has the following accounts " );
+		System.out.println("Customer " + c1.customer_name + " has the following accounts "  + '\n');
 		for (int i = 0; i < c1.account_list.size(); i ++) {
 			System.out.println(c1.account_list.get(i).AccountName + ": $" + c1.account_list.get(i).amount);
+			System.out.println("\n");
 			
 			
 		}
