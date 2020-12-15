@@ -7,11 +7,13 @@ import java.util.Objects;
 
 public class Customer  {
 	
-	protected String customer_name;
-	protected String password;
-	protected List <Transaction> transaction_list = new ArrayList<Transaction>();
-	protected List <Account> account_list = new ArrayList<Account>();
-	protected static List <Customer> customer_list = new ArrayList<Customer>();
+	
+	public int customerID;
+	public String customer_name;
+	public String password;
+	public List <Transaction> transaction_list = new ArrayList<Transaction>();
+	public List <Account> account_list = new ArrayList<Account>();
+	public static List <Customer> customer_list = new ArrayList<Customer>();
 	
 	public Customer() {
 	}
@@ -28,6 +30,12 @@ public class Customer  {
 	public Customer(String customer_name, String password) {
 		this.customer_name = customer_name;
 		this.password = password;
+	}
+	
+	public Customer(String customer_name, String password, int customerID) {
+		this.customer_name = customer_name;
+		this.password = password;
+		this.customerID = customerID;
 	}
 	
 	public String toString() {

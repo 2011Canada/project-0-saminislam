@@ -161,7 +161,8 @@ public class Menu {
 			scan.nextLine();
 			System.out.println("You have created the following bank account: ");
 			System.out.println(Name + " which has $" + amount);
-			Account a1 = new Account(Name,amount);
+			// do dao create account
+			Account a1 = new Account(Name,amount,c1.customerID);
 			c1.account_list.add(a1);
 			enterKeyHit();
 			choice = 0;
