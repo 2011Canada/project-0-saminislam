@@ -67,7 +67,7 @@ public class CustomerDAO {
 		e.printStackTrace();
 		}
 	
-	bankapp.debug("Executed in LoginDAO: Account has been inserted into DB");
+	bankapp.debug("Executed in CustomerDAO: Account has been inserted into DB");
 	
 	}
 	
@@ -91,7 +91,7 @@ public void DAOviewAccount(Customer c) {
 			ex.printStackTrace();
 		}
 		
-		bankapp.debug("Executed in LoginDAO: Account has been recovered from DB");
+		bankapp.debug("Executed in CustomerDAO: Account has been recovered from DB");
 		
 	}
 
@@ -110,7 +110,7 @@ public void DAOdeposit(double d_amount, Account a) {
 		ex.printStackTrace();
 		}
 	
-	bankapp.debug("Executed in LoginDAO: Deposit has been updated in DB");
+	bankapp.debug("Executed in CustomerDAO: Deposit has been updated in DB");
 	
 	}
 
@@ -128,13 +128,13 @@ public double DAObalance(Account a) {
 		
 		while (res.next()) {
 			balance = res.getDouble("amount");
-			//System.out.println(balance);
+			
 		}
 	} catch (SQLException ex) {
 		ex.printStackTrace();
 	}
 	
-	bankapp.debug("Executed in LoginDAO: Balance has been recovered from DB");
+	bankapp.debug("Executed in CustomerDAO: Balance has been recovered from DB");
 	
 	return balance;
 }
@@ -154,8 +154,26 @@ public void DAOwithdraw( double amount, Account a) {
 		ex.printStackTrace();
 	}
 	
-	bankapp.debug("Executed in LoginDAO: Withdraw has been updated in DB");
+	bankapp.debug("Executed in CustomerDAO: Withdraw has been updated in DB");
 	
+}
+
+public void DAOAccountDelete(Customer C, Account A ) {
+	
+	Connection conn = cf.getConnection();
+	
+	try {
+		
+		String sql = "delete from \"account\" where (\"customer_id\" = " + C.customerID + " and \"account_name\" = '" + A.AccountName + "');\n";
+		
+		Statement deleteAccount = conn.createStatement();
+		deleteAccount.executeUpdate(sql);	
+	}	
+	catch (SQLException ex) {
+		ex.printStackTrace();
+	}
+	
+	bankapp.debug("Executed in CustomerDAO: Account has been deleted in DB");
 }
 
 
@@ -177,7 +195,7 @@ public void DAOallBalance(Customer c) {
 		ex.printStackTrace();
 	}
 	
-	bankapp.debug("Executed in LoginDAO: All Balance has been recovered from DB");
+	bankapp.debug("Executed in CustomerDAO: All Balance has been recovered from DB");
 	
 }
 

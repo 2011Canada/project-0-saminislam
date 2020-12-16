@@ -509,6 +509,7 @@ public class Menu {
 					System.out.println("Which Customer's bank account would you like to reject?");
 					int bank_id = Integer.parseInt(scan.nextLine()) - 1;
 					emp.Account_Rejector(Customer.customer_list.get(cust_num), Customer.customer_list.get(cust_num).account_list.get(bank_id));
+					cDAO.DAOAccountDelete(Customer.customer_list.get(cust_num), Customer.customer_list.get(cust_num).account_list.get(bank_id));
 					}
 				}
 			if (choice_m3 == 4) {

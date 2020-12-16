@@ -1,3 +1,16 @@
-2020-12-16 00:12:12 project0 [INFO] Server has Started
-2020-12-16 00:12:18 project0 [DEBUG] Executed in LoginDAO: Account has been returned from DB
-2020-12-16 00:12:49 project0 [INFO] Server has Ended
+2020-12-16 02:18:56 project0 [INFO] Server has Started
+2020-12-16 02:19:49 project0 [DEBUG] Executed in LoginDAO: Customer has been returned from DB
+2020-12-16 02:19:52 project0 [DEBUG] Executed in LoginDAO: Customer has been returned from DB
+2020-12-16 02:20:06 project0 [DEBUG] Executed in CustomerDAO: Customer has been inserted into DB
+2020-12-16 02:20:20 project0 [DEBUG] Executed in LoginDAO: Account has been inserted into DB
+2020-12-16 02:20:32 project0 [DEBUG] Executed in LoginDAO: Account has been inserted into DB
+2020-12-16 02:20:56 project0 [DEBUG] Executed in LoginDAO: Deposit has been updated in DB
+2020-12-16 02:21:17 project0 [DEBUG] Executed in LoginDAO: Withdraw has been updated in DB
+2020-12-16 02:21:34 project0 [DEBUG] Executed in LoginDAO: Withdraw has been updated in DB
+2020-12-16 02:21:59 project0 [DEBUG] Executed in CustomerDAO: Customer has been inserted into DB
+2020-12-16 02:22:45 project0 [DEBUG] Executed in LoginDAO: Account has been inserted into DB
+2020-12-16 02:22:56 project0 [DEBUG] Executed in LoginDAO: Account has been inserted into DB
+2020-12-16 02:23:42 project0 [DEBUG] Executed in TransactionDAO: Transaction has been inserted into DB
+2020-12-16 02:23:42 project0 [DEBUG] Executed in TransactionDAO: Transaction has been inserted into DB
+2020-12-16 02:24:01 project0 [DEBUG] Executed in LoginDAO: Account has been returned from DB
+2020-12-16 02:26:28 project0 [INFO] Server has Ended
