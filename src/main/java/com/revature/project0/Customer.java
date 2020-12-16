@@ -1,4 +1,5 @@
 package com.revature.project0;
+import com.revature.repositories.*;
 
 import java.util.ArrayList;
 
@@ -61,16 +62,24 @@ public class Customer  {
 
 	public static Customer verifyCustomer(String name, String password) {
 		
-		for (Customer item : customer_list) {
-			if (item.Vequals(name, password))  {
-				System.out.println("Account Verified!");
-				return item;
-				}
+		LoginDAO lDAO = new LoginDAO();
+		
+		if (lDAO.DAOcustomerLogin(name, password) == null) {
+			return null;
+		}	else { 
+			
+			Customer c = lDAO.DAOcustomerLogin(name, password);
+			lDAO.DAOAccountRetrieve(c);
+			
+			System.out.println("Account Verified!");
+			return c;
 		}
-		System.out.println("Account Not Verified!");
-		return null;
-		}
-	
+	}
+			
+			
+			
+			
+			
 	// method to make sure that transaction object can actually be made
 	// to access this method, you have to do T.VerifyAccount(T,MS)
 	// so clean this code up where you only have one T

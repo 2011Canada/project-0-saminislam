@@ -1,6 +1,10 @@
 package com.revature.repositories;
 
 import java.sql.Connection;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +18,8 @@ public class LoginDAO {
 
 	private ConnectionFactory cf = ConnectionFactory.getConnectionFactory();
 	
+	public static Logger bankapp = LogManager.getLogger("com.revature.project0");
+	
 	public Customer DAOcustomerLogin(String username, String password) {
 		
 		Connection conn = this.cf.getConnection();
@@ -21,12 +27,18 @@ public class LoginDAO {
 		try {
 			String sql = "select * from customer where \"user_name\" = '" + username + "' and \"password\" = '" + password + "';";
 			
+
+			
 			Statement s = conn.createStatement();
 			ResultSet res = s.executeQuery(sql);
 			
 			Customer c;
 			
+			
+			
 			while (res.next()) {
+				
+				
 				c = new Customer();
 				c.customerID = (res.getInt("customer_id"));
 				c.customer_name = (res.getString("user_name"));
@@ -41,6 +53,9 @@ public class LoginDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		
+		bankapp.debug("Executed in LoginDAO: Customer has been returned from DB");
+		
 		return null;
 	}
 
@@ -66,7 +81,8 @@ public class LoginDAO {
 			ex.printStackTrace();
 			}
 		
-			
+		bankapp.debug("Executed in LoginDAO: Account has been returned from DB");	
+		
 		}
 		
 		

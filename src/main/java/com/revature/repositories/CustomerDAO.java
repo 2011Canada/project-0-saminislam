@@ -1,6 +1,10 @@
 package com.revature.repositories;
 
 import com.revature.project0.Account;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import com.revature.project0.ConnectionFactory;
 import com.revature.project0.Customer;
 
@@ -9,6 +13,8 @@ import java.sql.*;
 
 public class CustomerDAO {
 
+	public static Logger bankapp = LogManager.getLogger("com.revature.project0");
+	
 	ConnectionFactory cf = ConnectionFactory.getConnectionFactory();
 	
 	public void DAOcreateCustomer (Customer c) {
@@ -38,6 +44,8 @@ public class CustomerDAO {
 			
 		}
 		
+		bankapp.debug("Executed in CustomerDAO: Customer has been inserted into DB");
+		
 	}
 	
 	public void DAOcreateAccount (Account a) {
@@ -58,6 +66,9 @@ public class CustomerDAO {
 		} catch (SQLException e) {
 		e.printStackTrace();
 		}
+	
+	bankapp.debug("Executed in LoginDAO: Account has been inserted into DB");
+	
 	}
 	
 	
@@ -79,6 +90,9 @@ public void DAOviewAccount(Customer c) {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		
+		bankapp.debug("Executed in LoginDAO: Account has been recovered from DB");
+		
 	}
 
 public void DAOdeposit(double d_amount, Account a) {
@@ -95,6 +109,9 @@ public void DAOdeposit(double d_amount, Account a) {
 	} catch (SQLException ex) {
 		ex.printStackTrace();
 		}
+	
+	bankapp.debug("Executed in LoginDAO: Deposit has been updated in DB");
+	
 	}
 
 public double DAObalance(Account a) {
@@ -116,6 +133,9 @@ public double DAObalance(Account a) {
 	} catch (SQLException ex) {
 		ex.printStackTrace();
 	}
+	
+	bankapp.debug("Executed in LoginDAO: Balance has been recovered from DB");
+	
 	return balance;
 }
 
@@ -133,6 +153,9 @@ public void DAOwithdraw( double amount, Account a) {
 	} catch (SQLException ex) {
 		ex.printStackTrace();
 	}
+	
+	bankapp.debug("Executed in LoginDAO: Withdraw has been updated in DB");
+	
 }
 
 
@@ -153,6 +176,9 @@ public void DAOallBalance(Customer c) {
 	} catch (SQLException ex) {
 		ex.printStackTrace();
 	}
+	
+	bankapp.debug("Executed in LoginDAO: All Balance has been recovered from DB");
+	
 }
 
 	

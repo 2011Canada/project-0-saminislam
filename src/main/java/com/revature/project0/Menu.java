@@ -2,11 +2,20 @@ package com.revature.project0;
 
 import java.util.Scanner;
 
+import com.revature.repositories.CustomerDAO;
+import com.revature.repositories.LoginDAO;
+import com.revature.repositories.TransactionDAO;
+
 
 
 public class Menu {
 	static boolean exit1 = false;
 	boolean exit2;
+	
+	CustomerDAO cDAO = new CustomerDAO();
+	LoginDAO lDAO = new LoginDAO();
+	TransactionDAO TDAO = new TransactionDAO();
+	
 	
 	public void runMenu() {
 		printHeader();
@@ -38,7 +47,6 @@ public class Menu {
 	}
 	
 	private void performAction(int choice) {
-		//int choice_for_2nd_action;
 		Scanner scan = new Scanner(System.in);
 		switch(choice) {
 		case 1:
@@ -49,8 +57,12 @@ public class Menu {
 			System.out.print("Please enter your Password: ");
 			String password = scan.nextLine();
 			//System.out.println(Customer.customer_list);
+			
+			
 			Customer account_found = Customer.verifyCustomer(name,password);
 			if (account_found!= null) {
+				
+				
 				printMenu1(account_found);
 			} else {
 				System.out.println('\n'+ "Could not find your account");
@@ -82,6 +94,11 @@ public class Menu {
 			password = scan.nextLine();
 			Customer c1 = new Customer(name,password);
 			Customer.customer_list.add(c1);
+			
+			CustomerDAO cDAO = new CustomerDAO();
+			cDAO.DAOcreateCustomer(c1);
+			
+			
 			System.out.println("Your name is :" + name);
 			System.out.println("Your password is :" + password);
 			enterKeyHit();
@@ -161,8 +178,11 @@ public class Menu {
 			scan.nextLine();
 			System.out.println("You have created the following bank account: ");
 			System.out.println(Name + " which has $" + amount);
-			// do dao create account
+			
 			Account a1 = new Account(Name,amount,c1.customerID);
+			
+			cDAO.DAOcreateAccount(a1);
+			
 			c1.account_list.add(a1);
 			enterKeyHit();
 			choice = 0;
@@ -216,9 +236,15 @@ public class Menu {
 			boolean flag = T.VerifyTransaction(T, c1.account_list.get(choice1 - 1));
 			if (flag) {
 				c1.transaction_list.add(T);
+
+				TDAO.addTransaction(T, c1);
 				for ( Customer item : Customer.customer_list) {
 					if (item.customer_name.equals(T.receiver)) {
 						item.transaction_list.add(T);
+						TDAO.addTransaction(T, item);
+						
+		
+						
 						}
 					}
 				}
@@ -251,7 +277,9 @@ public class Menu {
 			boolean incoming_flag = false;
 			for (int i = 0; i < c1.transaction_list.size(); i ++) {
 				
-				if (c1.transaction_list.get(i).amount_deposited == null && c1.transaction_list.get(i).receiver.equals(c1.customer_name)) {
+				
+				
+				if (c1.transaction_list.get(i).amount_deposited == null && (c1.transaction_list.get(i).receiver.equals(c1.customer_name))) {
 				System.out.println("Transaction " + (i+1) + "-> " + "Sender: " + c1.transaction_list.get(i).sender + '\n' +
 						"                Recipient: " + c1.transaction_list.get(i).receiver + '\n' +
 						"                Amount Sent: " + c1.transaction_list.get(i).amount_to_send  + '\n' +
@@ -259,6 +287,8 @@ public class Menu {
 				incoming_flag= true;
 				}
 			}
+			
+
 			
 			if (!incoming_flag) {
 				System.out.println("You have no Incoming Pending Transactions" + '\n');
@@ -293,9 +323,13 @@ public class Menu {
 									choice3 = Integer.parseInt(scan.nextLine());
 							
 									c1.transaction_list.get(i).AcceptTransaction(c1.transaction_list.get(i), c1.account_list.get(choice3 - 1), c1.transaction_list.get(i).account, true);
+									TDAO.addTransaction(c1.transaction_list.get(i), c1);
+									TDAO.addTransaction(c1.transaction_list.get(i), c1.account_list.get(choice3 - 1));
 									}
 								if (choice3 == 2) {
 									c1.transaction_list.get(i).AcceptTransaction(c1.transaction_list.get(i), c1.account_list.get(choice3 - 1), c1.transaction_list.get(i).account, false);
+									TDAO.addTransaction(c1.transaction_list.get(i), c1);
+									TDAO.addTransaction(c1.transaction_list.get(i), c1.account_list.get(choice3 - 1));
 									System.out.println("This Transaction has been rejected");
 								}
 
@@ -349,6 +383,7 @@ public class Menu {
 					}
 				}
 				c1.deposit(amount_depositted, c1.account_list.get(choice2 - 1));
+				cDAO.DAOdeposit(amount_depositted, c1.account_list.get(choice2 - 1));
 				System.out.println("\n");
 				enterKeyHit();
 				choice2 = 0;
@@ -375,6 +410,7 @@ public class Menu {
 					}
 				}
 				c1.withdraw(amount_withdrawn,c1.account_list.get(choice2 - 1));
+				cDAO.DAOwithdraw(amount_withdrawn,c1.account_list.get(choice2 - 1));
 				System.out.println("\n");
 				enterKeyHit();
 				choice2 = 0;
@@ -416,6 +452,7 @@ public class Menu {
 		String password = scan.nextLine();
 		if (name.equals(emp.username) && password.equals(emp.password)) {
 			System.out.println("Employee Login Successful");
+			
 			while(!exit) {
 			System.out.println("What would you like to do next?");
 			System.out.println("1) Check a customer's Bank Accounts");
@@ -434,11 +471,12 @@ public class Menu {
 				}
 			
 				if (Customer.customer_list.size() != 0 ) {
-					System.out.println("These are all the Customer users in your database" + choice_m3 + ")");
+					System.out.println("These are all the Customer users in your database");
 					Employee.View_Customer_List();
 					System.out.println("Which customer's bank account would you like to see?");
 					int cust_num = Integer.parseInt(scan.nextLine()) - 1;
 					emp.View_Customer_Bank_Accounts(Customer.customer_list.get(cust_num));
+					
 				}
 			}
 			if (choice_m3 == 2 ) {
@@ -448,10 +486,11 @@ public class Menu {
 				}
 				
 				if (Customer.customer_list.size() != 0 ) {
-				System.out.println("These are all the Customer users in your database" + choice_m3 + ")");
+				System.out.println("These are all the Customer users in your database");
 				Employee.View_Customer_List();
 				System.out.println("Which Customer's transaction logs do you want to see?");
 				int cust_num = Integer.parseInt(scan.nextLine()) - 1;
+				
 				emp.View_Transaction_Log(Customer.customer_list.get(cust_num));
 				}
 			}
